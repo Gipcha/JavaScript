@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background-color: white;
+    color: black;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.box {
+    width: 200px;
+    height: 100px;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    transition: 0.3s;
+}
+
+/* темная тема */
+
+.dark-theme {
+    background-color: black;
+    color: white;
+}
