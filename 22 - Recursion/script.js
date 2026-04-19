@@ -35,4 +35,4 @@ function fibonacci (n, cache = {0:0, 1:1}) {
         return cache[n];
     }
 }
-console.log(fibonacci(12, cache = {0:0, 1:1}));
+console.log(fibonacci(32));
