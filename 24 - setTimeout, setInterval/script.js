@@ -34,6 +34,11 @@ const startBtn = document.getElementById("start-btn");
 let timerId = null;
 
 startBtn.addEventListener("click", () => {
+  const delay = Number(delayField.value);
+  if (delay < 500) {
+    alert("The minimum delay is 500 milliseconds");
+    return;
+  }
   if (timerId) {
     clearInterval(timerId);
     timerId = null;
@@ -41,7 +46,7 @@ startBtn.addEventListener("click", () => {
   } else {
     timerId = setInterval(() => {
       console.log(textField.value);
-    }, Number(delayField.value));
+    }, delay);
 
     startBtn.textContent = "Stop";
   }
