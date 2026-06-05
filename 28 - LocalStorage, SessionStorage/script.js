@@ -5,6 +5,7 @@ const emailInput = document.getElementById("email-input");
 const phoneInput = document.getElementById("phone-input");
 
 const form = document.getElementById("form-id");
+const successMessage = document.getElementById("success-message");
 const output = document.getElementById("output");
 
 function renderUser(user) {
@@ -25,15 +26,39 @@ if (saved) {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+
+  if (!name || !email || !phone) {
+    successMessage.textContent = "Please fill in all fields!";
+    successMessage.style.color = "red";
+
+    setTimeout(() => {
+      successMessage.textContent = "";
+    }, 3000);
+
+    return;
+  }
+
   const user = {
-    name: nameInput.value,
-    email: emailInput.value,
-    phone: phoneInput.value,
+    name,
+    email,
+    phone,
   };
 
   localStorage.setItem("user", JSON.stringify(user));
 
   renderUser(user);
+
+  successMessage.textContent = "Contact saved successfully!";
+  successMessage.style.color = "green";
+
+  setTimeout(() => {
+    successMessage.textContent = "";
+  }, 3000);
+
+  form.reset();
 });
 
 //2. Создай приложение для учета расходов. Сохрани каждую запись расхода (описание, сумма, дата) в LocalStorage в виде массива объектов JSON.
@@ -44,7 +69,10 @@ const dateInput = document.getElementById("date-input");
 
 const expenseForm = document.getElementById("second-form-id");
 const expenseOutput = document.getElementById("second-output");
+
 let editingIndex = null;
+
+let expenses = JSON.parse(localStorage.getItem("expenses") ?? "[]");
 
 function renderExpenses(expenses) {
   expenseOutput.innerHTML = `
@@ -62,8 +90,13 @@ function renderExpenses(expenses) {
               </div>
 
               <div class="buttons">
-                <button onclick="deleteExpense(${index})">Delete</button>
-                <button onclick="editExpense(${index})">Edit</button>
+                <button class="delete-btn" data-index="${index}">
+                  Delete
+                </button>
+
+                <button class="edit-btn" data-index="${index}">
+                  Edit
+                </button>
               </div>
             </div>
           `,
@@ -91,23 +124,36 @@ function editExpense(index) {
   editingIndex = index;
 }
 
-let expenses = localStorage.getItem("expenses");
+expenseOutput.addEventListener("click", (event) => {
+  const index = Number(event.target.dataset.index);
 
-if (expenses) {
-  expenses = JSON.parse(expenses);
-} else {
-  expenses = [];
-}
+  if (event.target.classList.contains("delete-btn")) {
+    deleteExpense(index);
+  }
+
+  if (event.target.classList.contains("edit-btn")) {
+    editExpense(index);
+  }
+});
 
 renderExpenses(expenses);
 
 expenseForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  const description = descriptionInput.value.trim();
+  const amount = amountInput.value.trim();
+  const date = dateInput.value;
+
+  if (!description || !amount || !date) {
+    alert("Please fill in all fields");
+    return;
+  }
+
   const newExpense = {
-    description: descriptionInput.value,
-    amount: amountInput.value,
-    date: dateInput.value,
+    description,
+    amount,
+    date,
   };
 
   if (editingIndex !== null) {
@@ -120,6 +166,7 @@ expenseForm.addEventListener("submit", (event) => {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 
   renderExpenses(expenses);
+
   expenseForm.reset();
 });
 //3. Создай счетчик, который отслеживает и отображает активное время пользователя на странице.
