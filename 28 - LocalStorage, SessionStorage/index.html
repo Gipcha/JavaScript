@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="tasks">
+      <div id="first-task">
+        <form id="form-id">
+          <input id="name-input" type="text" placeholder="What's your name?" />
+          <input
+            id="email-input"
+            type="email"
+            placeholder="What's your email?"
+          />
+          <input
+            id="phone-input"
+            type="number"
+            placeholder="What's your phone number?"
+          />
+          <button type="submit">Save</button>
+        </form>
+        <div id="output"></div>
+      </div>
+      <div id="second-task">
+        <form id="second-form-id">
+          <input id="description-input" type="text" placeholder="description" />
+          <input id="total-input" type="number" placeholder="total" />
+          <input id="date-input" type="date" placeholder="date" />
+          <button type="submit">Save</button>
+        </form>
+        <div id="second-output"></div>
+      </div>
+      <div id="timer">0</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
