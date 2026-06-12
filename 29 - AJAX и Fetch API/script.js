@@ -52,6 +52,35 @@ userData.addEventListener("submit", (event) => {
 
 //2. Реализуй кнопку для загрузки списка постов.
 //   При нажатии на кнопку выполни GET запрос к API и отобрази список постов на странице;
+const showListBtn = document.getElementById("show-list-btn");
+const postsList = document.getElementById("posts-list");
+
+showListBtn.addEventListener("click", () => {
+  // сброс состояния + подготовка UI
+  postsList.classList.add("active");
+  postsList.innerHTML = "<p>Loading...</p>";
+
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((posts) => {
+      let html = "";
+
+      posts.forEach((post) => {
+        html += `
+          <div class="post">
+            <p><b>ID:</b> ${post.id}</p>
+            <p><b>Title:</b> ${post.title}</p>
+            <p><b>Body:</b> ${post.body}</p>
+          </div>
+        `;
+      });
+
+      postsList.innerHTML = html;
+    })
+    .catch(() => {
+      postsList.innerHTML = "<p>Error loading posts</p>";
+    });
+});
 
 //3. Создай функцию для удаления поста по id. Выполни DELETE запрос к API и обнови DOM, удалив соответствующий пост;
 

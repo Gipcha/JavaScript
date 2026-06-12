@@ -1,31 +1,33 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f7fb;
+  background: #f4f6fb;
   margin: 0;
   min-height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* контейнер */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-}
-
-form#userData,
-#server-response {
-  width: 340px;
-  background: #ffffff;
+  gap: 18px;
+  width: 100%;
+  max-width: 800px;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
+/* форма */
 form#userData {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -33,8 +35,8 @@ form#userData {
 
 form#userData input {
   padding: 10px 12px;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
+  border: 1px solid #d7dbe3;
+  border-radius: 10px;
   font-size: 14px;
   outline: none;
   transition: 0.2s;
@@ -42,14 +44,14 @@ form#userData input {
 
 form#userData input:focus {
   border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
 
 form#userData button {
   padding: 10px;
   border: none;
-  border-radius: 8px;
-  background-color: #4a90e2;
+  border-radius: 10px;
+  background: #4a90e2;
   color: white;
   font-size: 14px;
   cursor: pointer;
@@ -57,42 +59,65 @@ form#userData button {
 }
 
 form#userData button:hover {
-  background-color: #3b7bd6;
+  background: #3b7bd6;
+  transform: translateY(-1px);
 }
 
-form#userData button:active {
-  transform: scale(0.98);
-}
-
-.success {
-  color: #1a7f37;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.post-card {
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-  margin-top: 10px;
-}
-
-.post-card p {
-  margin: 6px 0;
+/* кнопка show posts */
+#show-list-btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
   font-size: 14px;
 }
 
-#server-response {
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
+#show-list-btn:hover {
+  background: #1f2937;
+  transform: translateY(-1px);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ❗ ВАЖНО: ПО УМОЛЧАНИЮ БЛОК НЕ ВЫГЛЯДИТ КАК КАРТОЧКА */
+#posts-list {
+  width: 100%;
+  max-width: 700px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* ❗ КАРТОЧКА ВКЛЮЧАЕТСЯ ТОЛЬКО КОГДА ЕСТЬ КЛАСС */
+#posts-list.active {
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* пост */
+.post {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #e6e8ef;
+  transition: 0.2s;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.post p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #333;
 }
