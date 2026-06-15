@@ -8,7 +8,7 @@ body {
   align-items: center;
 }
 
-/* контейнер */
+/* container */
 .container {
   display: flex;
   flex-direction: column;
@@ -19,8 +19,9 @@ body {
   padding: 20px;
 }
 
-/* форма */
-form#userData {
+/* form */
+
+.form-card {
   width: 100%;
   max-width: 420px;
   background: #fff;
@@ -33,7 +34,7 @@ form#userData {
   gap: 12px;
 }
 
-form#userData input {
+.form-card input {
   padding: 10px 12px;
   border: 1px solid #d7dbe3;
   border-radius: 10px;
@@ -42,28 +43,44 @@ form#userData input {
   transition: 0.2s;
 }
 
-form#userData input:focus {
+.form-card input:focus {
   border-color: #4a90e2;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
 
-form#userData button {
+/* buttons*/
+
+.form-card button {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  background: #4a90e2;
-  color: white;
   font-size: 14px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-form#userData button:hover {
-  background: #3b7bd6;
-  transform: translateY(-1px);
+/* submit */
+#button {
+  background: #4a90e2;
+  color: white;
 }
 
-/* кнопка show posts */
+#button:hover {
+  background: #3b7bd6;
+}
+
+/* update */
+#update-btn {
+  background: #10b981;
+  color: white;
+}
+
+#update-btn:hover {
+  background: #0f9f6e;
+}
+
+/*  show posts */
+
 #show-list-btn {
   padding: 10px 14px;
   border: none;
@@ -80,21 +97,19 @@ form#userData button:hover {
   transform: translateY(-1px);
 }
 
-/* ❗ ВАЖНО: ПО УМОЛЧАНИЮ БЛОК НЕ ВЫГЛЯДИТ КАК КАРТОЧКА */
+/* posts list */
+
 #posts-list {
   width: 100%;
   max-width: 700px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
-
   padding: 0;
   background: transparent;
   box-shadow: none;
-  border-radius: 0;
 }
 
-/* ❗ КАРТОЧКА ВКЛЮЧАЕТСЯ ТОЛЬКО КОГДА ЕСТЬ КЛАСС */
 #posts-list.active {
   background: #fff;
   padding: 18px;
@@ -102,12 +117,12 @@ form#userData button:hover {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* пост */
+/* post card*/
 .post {
-  background: #ffffff;
+  background: #fff;
+  border: 1px solid #e6e8ef;
   border-radius: 12px;
   padding: 14px;
-  border: 1px solid #e6e8ef;
   transition: 0.2s;
 }
 
@@ -118,6 +133,58 @@ form#userData button:hover {
 
 .post p {
   margin: 6px 0;
-  font-size: 14px;
   color: #333;
+  font-size: 14px;
+}
+
+/* delete button */
+.post button {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.post button:hover {
+  background: #dc2626;
+}
+
+/*  massages  */
+
+.success {
+  color: #1a7f37;
+  font-weight: bold;
+}
+
+.error {
+  color: #d93025;
+  font-weight: bold;
+}
+
+#server-response {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
