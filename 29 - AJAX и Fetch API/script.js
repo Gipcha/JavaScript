@@ -30,7 +30,12 @@ userData.addEventListener("submit", (event) => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
     .then((data) => {
       serverResponse.style.display = "block";
       serverResponse.innerHTML = `
@@ -47,6 +52,9 @@ userData.addEventListener("submit", (event) => {
       userId.value = "";
       title.value = "";
       body.value = "";
+    })
+    .catch(() => {
+      alert("Error");
     });
 });
 
@@ -55,7 +63,7 @@ userData.addEventListener("submit", (event) => {
 const showListBtn = document.getElementById("show-list-btn");
 const postsList = document.getElementById("posts-list");
 
-showListBtn.addEventListener("click", () => {
+function getPosts() {
   postsList.classList.add("active");
   postsList.innerHTML = "<p>Loading...</p>";
   fetch("https://jsonplaceholder.typicode.com/posts")
@@ -79,8 +87,7 @@ showListBtn.addEventListener("click", () => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
 
-          deleteIdPost(id);
-          btn.parentElement.remove();
+          deleteIdPost(id, btn);
         });
       });
     })
@@ -88,14 +95,31 @@ showListBtn.addEventListener("click", () => {
     .catch(() => {
       postsList.innerHTML = "<p>Error loading posts</p>";
     });
+}
+
+showListBtn.addEventListener("click", () => {
+  getPosts();
 });
 
 //3. Создай функцию для удаления поста по id. Выполни DELETE запрос к API и обнови DOM, удалив соответствующий пост;
 
-function deleteIdPost(id) {
+function deleteIdPost(id, btn) {
+  btn.disabled = true;
   fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     method: "DELETE",
-  });
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Delete failed");
+      }
+      getPosts();
+    })
+    .catch(() => {
+      alert("Error");
+    })
+    .finally(() => {
+      btn.disabled = false;
+    });
 }
 
 //4. Реализуй функциональность для обновления данных пользователя.
@@ -124,7 +148,13 @@ updateBtn.addEventListener("click", () => {
       body: body.value,
     }),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+
     .then((data) => {
       serverResponse.style.display = "block";
 
@@ -142,10 +172,14 @@ updateBtn.addEventListener("click", () => {
       userId.value = "";
       title.value = "";
       body.value = "";
+    })
+    .catch(() => {
+      alert("Error");
     });
 });
-/*PUT и PATCH отличаются тем, как они обновляют данные на сервере.
-  PUT — полностью заменяет ресурс.
-  Мы отправляем объект целиком и старые данные переписываются новыми.
-  PATCH — обновляет только часть ресурса.
-  Мы отправляем только те поля, которые нужно изменить, остальные остаются без изменений.*/
+
+//PUT и PATCH отличаются тем, как они обновляют данные на сервере.
+//PUT — полностью заменяет ресурс.
+//Мы отправляем объект целиком и старые данные переписываются новыми.
+//PATCH — обновляет только часть ресурса.
+//Мы отправляем только те поля, которые нужно изменить, остальные остаются без изменений.
